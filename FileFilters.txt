@@ -1,0 +1,12 @@
+*.tif*
+*.image
+*.tif* ; *.image ; *.edf ; *.cbf ; *.h5 ; *.nxs
+^.*\.(?:tif.?|image|edf|cbf|h5|nxs)$
+*.fsi
+*.fsx
+*.dat
+*.fsi ; *.fsx
+*.dat ; *.fsi
+*.dat ; *.fsi ; *.fsx
+*.tif* ; *.image ; *.fsi ; *.dat
+*.*

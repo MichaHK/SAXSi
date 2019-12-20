@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
+  <configuration target="target.ezdeploy.standalone" target-name="MATLAB Compiler for Standalone Applications" name="SAXSi build" location="C:\Files\The Lab (Synced)\Code\SAXSi Dev" file="C:\Files\The Lab (Synced)\Code\SAXSi Dev\SAXSi build.prj">
+    <param.appname>SAXSi_1_9_10_beta</param.appname>
+    <param.authnamewatermark />
+    <param.email />
+    <param.company />
+    <param.icon />
+    <param.icons />
+    <param.summary />
+    <param.description />
+    <param.screenshot />
+    <param.version>1.0</param.version>
+    <param.namespace>SAXSi_1_9_10_beta</param.namespace>
+    <param.guid />
+    <param.installpath.string>SAXSi build</param.installpath.string>
+    <param.installpath.combo>option.installpath.programfiles</param.installpath.combo>
+    <param.logo />
+    <param.install.notes />
+    <param.intermediate>${PROJECT_ROOT}\SAXSi_1_9_10_beta\for_testing</param.intermediate>
+    <param.output>${PROJECT_ROOT}\SAXSi_1_9_10_beta\for_redistribution</param.output>
+    <param.embed.ctf>true</param.embed.ctf>
+    <param.target.type>subtarget.standalone</param.target.type>
+    <param.classorg />
+    <param.web.mcr>true</param.web.mcr>
+    <param.package.mcr>false</param.package.mcr>
+    <param.no.mcr>false</param.no.mcr>
+    <param.web.mcr.name>MyAppInstaller_web</param.web.mcr.name>
+    <param.package.mcr.name>MyAppInstaller_mcr</param.package.mcr.name>
+    <param.no.mcr.name>MyAppInstaller_app</param.no.mcr.name>
+    <param.user.defined.mcr.options />
+    <param.windows.command.prompt>true</param.windows.command.prompt>
+    <param.user.only.registration>false</param.user.only.registration>
+    <param.mads.no.java>false</param.mads.no.java>
+    <param.mads.exclusive.mcr>false</param.mads.exclusive.mcr>
+    <param.net.framework>option.net.framework.default</param.net.framework>
+    <param.assembly.type>false</param.assembly.type>
+    <param.encryption.key.file />
+    <param.net.enable.remoting>false</param.net.enable.remoting>
+    <param.net.tsa.enable>false</param.net.tsa.enable>
+    <param.net.tsa.assembly />
+    <param.net.tsa.interface />
+    <param.net.tsa.namespace>SAXSi_1_9_10_beta</param.net.tsa.namespace>
+    <param.net.tsa.superclass />
+    <param.net.tsa.metadata />
+    <param.net.tsa.metadata.assembly>C:\Users\Ram\Documents\MATLAB</param.net.tsa.metadata.assembly>
+    <param.create.log>false</param.create.log>
+    <param.log.file />
+    <unset>
+      <param.authnamewatermark />
+      <param.email />
+      <param.company />
+      <param.icon />
+      <param.icons />
+      <param.summary />
+      <param.description />
+      <param.screenshot />
+      <param.version />
+      <param.namespace />
+      <param.guid />
+      <param.logo />
+      <param.install.notes />
+      <param.intermediate />
+      <param.output />
+      <param.embed.ctf />
+      <param.target.type />
+      <param.classorg />
+      <param.web.mcr />
+      <param.package.mcr />
+      <param.no.mcr />
+      <param.web.mcr.name />
+      <param.package.mcr.name />
+      <param.no.mcr.name />
+      <param.user.defined.mcr.options />
+      <param.windows.command.prompt />
+      <param.user.only.registration />
+      <param.mads.no.java />
+      <param.mads.exclusive.mcr />
+      <param.net.framework />
+      <param.assembly.type />
+      <param.encryption.key.file />
+      <param.net.enable.remoting />
+      <param.net.tsa.enable />
+      <param.net.tsa.assembly />
+      <param.net.tsa.interface />
+      <param.net.tsa.namespace />
+      <param.net.tsa.superclass />
+      <param.net.tsa.metadata />
+      <param.net.tsa.metadata.assembly />
+      <param.create.log />
+      <param.log.file />
+    </unset>
+    <fileset.main>
+      <file>${PROJECT_ROOT}\SAXSi.m</file>
+    </fileset.main>
+    <fileset.resources>
+      <file>${PROJECT_ROOT}\AddCalibrationSample_GUI_SAXSi.m</file>
+      <file>${PROJECT_ROOT}\AreFieldsEqual.m</file>
+      <file>${PROJECT_ROOT}\AverageOnGenericConic.m</file>
+      <file>${PROJECT_ROOT}\AverageOnQConic.m</file>
+      <file>${PROJECT_ROOT}\AverageOnQRange.m</file>
+      <file>${PROJECT_ROOT}\AverageOnQRangeLagrange.m</file>
+      <file>${PROJECT_ROOT}\BindingDataClass.m</file>
+      <file>${PROJECT_ROOT}\BindingsClass.m</file>
+      <file>${PROJECT_ROOT}\Calibrants.csv</file>
+      <file>${PROJECT_ROOT}\Calibration.m</file>
+      <file>${PROJECT_ROOT}\Calibration_AvgOnQConic.m</file>
+      <file>${PROJECT_ROOT}\CalibrationDataClass.m</file>
+      <file>${PROJECT_ROOT}\CalibrationDialog.fig</file>
+      <file>${PROJECT_ROOT}\CalibrationDialog.m</file>
+      <file>${PROJECT_ROOT}\CalibrationDialogDataClass.m</file>
+      <file>${PROJECT_ROOT}\CalibrationFromConic.m</file>
+      <file>${PROJECT_ROOT}\CalibrationFromPoints.m</file>
+      <file>${PROJECT_ROOT}\CalibrationGUI.m</file>
+      <file>${PROJECT_ROOT}\CalibrationParametersScore.m</file>
+      <file>${PROJECT_ROOT}\CenterOfIntensity.m</file>
+      <file>${PROJECT_ROOT}\CheckForUpdates.m</file>
+      <file>${PROJECT_ROOT}\circle.m</file>
+      <file>${PROJECT_ROOT}\CopperKAlpha.m</file>
+      <file>${PROJECT_ROOT}\CopyFieldsInto.m</file>
+      <file>${PROJECT_ROOT}\CropImageAround.m</file>
+      <file>${PROJECT_ROOT}\DebugPlotImageWithConic.m</file>
+      <file>${PROJECT_ROOT}\dict.m</file>
+      <file>${PROJECT_ROOT}\DisplayOptionsClass.m</file>
+      <file>${PROJECT_ROOT}\errorbar_tick license.txt</file>
+      <file>${PROJECT_ROOT}\errorbar_tick.m</file>
+      <file>${PROJECT_ROOT}\FastIntegrationCacheClass.m</file>
+      <file>${PROJECT_ROOT}\FileFilters.txt</file>
+      <file>${PROJECT_ROOT}\finddiffdir.m</file>
+      <file>${PROJECT_ROOT}\fit_circles.m</file>
+      <file>${PROJECT_ROOT}\FitConicToNearbyPeak.m</file>
+      <file>${PROJECT_ROOT}\FitConicToNearbyPeak2d.m</file>
+      <file>${PROJECT_ROOT}\FitConicWithGradualSpreading.m</file>
+      <file>${PROJECT_ROOT}\FitPeak2d.m</file>
+      <file>${PROJECT_ROOT}\FitPowerLaw2d.m</file>
+      <file>${PROJECT_ROOT}\fixThisGraphFid.m</file>
+      <file>${PROJECT_ROOT}\GaussianSimpleFit.m</file>
+      <file>${PROJECT_ROOT}\GeneralOptionsClass.m</file>
+      <file>${PROJECT_ROOT}\Get2dIntensity.m</file>
+      <file>${PROJECT_ROOT}\GetCentralProfile.m</file>
+      <file>${PROJECT_ROOT}\GetQScaleConversion.m</file>
+      <file>${PROJECT_ROOT}\getRforSec.m</file>
+      <file>${PROJECT_ROOT}\GetThetaForXY.m</file>
+      <file>${PROJECT_ROOT}\GetValuesOnConic.m</file>
+      <file>${PROJECT_ROOT}\GetVersion.m</file>
+      <file>${PROJECT_ROOT}\IntegrateAccurate.m</file>
+      <file>${PROJECT_ROOT}\IntegrationParamsClass.m</file>
+      <file>${PROJECT_ROOT}\interpolate_im3.m</file>
+      <file>${PROJECT_ROOT}\IntFast.m</file>
+      <file>${PROJECT_ROOT}\IsExtensionOf1dCurve.m</file>
+      <file>${PROJECT_ROOT}\IsExtensionOfImage.m</file>
+      <file>${PROJECT_ROOT}\LastVersionCheck.mat</file>
+      <file>${PROJECT_ROOT}\LorentzianSimpleFit.m</file>
+      <file>${PROJECT_ROOT}\MarkQDialog.fig</file>
+      <file>${PROJECT_ROOT}\MarkQDialog.m</file>
+      <file>${PROJECT_ROOT}\Matrix2Image.m</file>
+      <file>${PROJECT_ROOT}\MaxRowCol.m</file>
+      <file>${PROJECT_ROOT}\MinimizedControlPointsScoreFunction.m</file>
+      <file>${PROJECT_ROOT}\MinRowCol.m</file>
+      <file>${PROJECT_ROOT}\MyCsvRead.m</file>
+      <file>${PROJECT_ROOT}\myerrorbar.m</file>
+      <file>${PROJECT_ROOT}\NonNormalized2dGaussian.m</file>
+      <file>${PROJECT_ROOT}\Normalized2dGaussian.m</file>
+      <file>${PROJECT_ROOT}\ProduceBeamImages.m</file>
+      <file>${PROJECT_ROOT}\QMarkClass.m</file>
+      <file>${PROJECT_ROOT}\read2D.m</file>
+      <file>${PROJECT_ROOT}\readchifilenew.m</file>
+      <file>${PROJECT_ROOT}\ReadEsrf1D.m</file>
+      <file>${PROJECT_ROOT}\readimgSAXS.m</file>
+      <file>${PROJECT_ROOT}\readimgSAXSgfrm.m</file>
+      <file>${PROJECT_ROOT}\readitAxes.m</file>
+      <file>${PROJECT_ROOT}\readMar345.m</file>
+      <file>${PROJECT_ROOT}\readOrIntigrate.m</file>
+      <file>${PROJECT_ROOT}\ReadP12Dat.m</file>
+      <file>${PROJECT_ROOT}\readtext.m</file>
+      <file>${PROJECT_ROOT}\ReconstructPeakShortSimpleSteps.m</file>
+      <file>${PROJECT_ROOT}\ReplaceFileExtension.m</file>
+      <file>${PROJECT_ROOT}\SAXSi build.prj</file>
+      <file>${PROJECT_ROOT}\SAXSi.fig</file>
+      <file>${PROJECT_ROOT}\SAXSi.m</file>
+      <file>${PROJECT_ROOT}\SAXSiClass.m</file>
+      <file>${PROJECT_ROOT}\SAXSiStateClass.m</file>
+      <file>${PROJECT_ROOT}\SelectImageAndRead.m</file>
+      <file>${PROJECT_ROOT}\setroi.m</file>
+      <file>${PROJECT_ROOT}\SPEC Modifications.txt</file>
+      <file>${PROJECT_ROOT}\SpreadCurvesAdditively.m</file>
+      <file>${PROJECT_ROOT}\SpreadCurvesMultiplicatively.m</file>
+      <file>${PROJECT_ROOT}\strSplit.m</file>
+      <file>${PROJECT_ROOT}\sum2dimages.m</file>
+      <file>${PROJECT_ROOT}\Test.m</file>
+      <file>${PROJECT_ROOT}\TraceStep.m</file>
+      <file>${PROJECT_ROOT}\TraceStepFaster.m</file>
+      <file>${PROJECT_ROOT}\TraceStepUsingCenterOfMass.m</file>
+      <file>${PROJECT_ROOT}\try1.m</file>
+      <file>${PROJECT_ROOT}\Untitled1.prj</file>
+      <file>${PROJECT_ROOT}\ValidConexConicFromPointsNonlinearConstraint.m</file>
+      <file>${PROJECT_ROOT}\WhatsNew.txt</file>
+      <file>${PROJECT_ROOT}\XY2QValue.m</file>
+    </fileset.resources>
+    <fileset.package />
+    <build-deliverables>
+      <file name="readme.txt" location="${PROJECT_ROOT}\SAXSi_1_9_10_beta\for_testing" optional="true">C:\Files\The Lab (Synced)\Code\SAXSi Dev\SAXSi_1_9_10_beta\for_testing\readme.txt</file>
+      <file name="SAXSi_1_9_10_beta.exe" location="${PROJECT_ROOT}\SAXSi_1_9_10_beta\for_testing" optional="false">C:\Files\The Lab (Synced)\Code\SAXSi Dev\SAXSi_1_9_10_beta\for_testing\SAXSi_1_9_10_beta.exe</file>
+    </build-deliverables>
+    <workflow />
+    <matlab>
+      <root>C:\Program Files\MATLAB\R2013b</root>
+      <toolboxes>
+        <toolbox name="fixedpoint" />
+      </toolboxes>
+    </matlab>
+    <platform>
+      <unix>false</unix>
+      <mac>false</mac>
+      <windows>true</windows>
+      <win2k>false</win2k>
+      <winxp>false</winxp>
+      <vista>false</vista>
+      <linux>false</linux>
+      <solaris>false</solaris>
+      <osver>6.1</osver>
+      <os32>false</os32>
+      <os64>true</os64>
+      <arch>win64</arch>
+      <matlab>true</matlab>
+    </platform>
+  </configuration>
+</deployment-project>
+

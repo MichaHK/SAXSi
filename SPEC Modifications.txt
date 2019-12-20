@@ -1,0 +1,45 @@
+
+-- Consider blocking access to "Backups" and allow access to the data folder on the Dectris machine.
+-- Cleanup images backups & Dectris machine
+
+Possible "prespectives" on the data folders:
+\\132.66.248.206\Backups\p2_det\images\pilatus\
+\\Beckstorage\Backups\p2_det\images\pilatus\
+\\192.168.0.103\Backups\p2_det\images\pilatus\
+
+
+*** Modifications to SPEC:
+
+--- New Commands ---
+
+CalibrateSlitsPP
+do SetCalibratedSlitsPP
+
+Tag [name] [value] // Adds a general tag
+Conc 3.52 // Adds a tag of concentration
+Buffer [index] // Declares this measurement as buffer
+StageHolder [description] // Adds a tag describing the used stage holder
+CalibrationImage [AgB/other]
+CalibrationImageAgB // Would allow automatic callibration when this tag is available
+SetSamplePosition [sample name or number] [x] [z] <y>
+ClearSamples
+GoToSample [name or number]
+
+-- mar image capture would include a running counter (like pilatus)
+-- mar image folder would be relative save as "dir_base"
+-- Motor motion is recorded in the data folder (".myMotorsLog") and in another preset folder
+----- SAXSi is expected to attach these tags to the image
+-- Tags are recorded in the data folder (".myTags")
+
+--- Command Aliases ---
+scanr = dscan
+scan = ascan
+scan2 ...
+scan3 ...
+SetDataFolder = dir_base
+
+--- Command Modifications ---
+pilatus_on/off now defaults to 1
+pilatus_help explains the pilatus commands
+
+

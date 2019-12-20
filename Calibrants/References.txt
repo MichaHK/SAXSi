@@ -1,0 +1,12 @@
+AgB 2011:
+Crystal structure determination of the silver carboxylate dimer [Ag(O2C22H43)]2, silver behenate, using powder X-ray diffraction methods
+http://dx.doi.org/10.1154/1.3661981
+
+AgB 1995:
+JCPDS-International Centre for Diffraction Data Round Robin Study of Silver Behenate. A possible low-angle X-ray diffraction calibration standard
+T N Blanton, T C Huang, H Toraya, C R Hubbard, S B Robie, D Louer, H E Gobel, G Will, R Gilles, T Raftery
+
+AgB 1993:
+X-ray powder diffraction analysis of silver behenate, a possible low-angle diffraction standard
+T. C. Huang, H. Toraya, T. N. Blanton and Y. Wu
+http://dx.doi.org/10.1107/S0021889892009762

@@ -1,0 +1,9 @@
+- Display (old) images with their corresponding calibration
+
+- Give a warning when detecting large continuous areas of zeros (or any other value continuously present). Maybe a mask is required.
+
+- notify user that "reintegrate" did not actually work on some files
+
+- sum 2d images to TIF instrad of MAT
+
+- make "reintegrate" automatically detect original image and use it when "fsi" is loaded

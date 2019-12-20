@@ -1,0 +1,421 @@
+classdef ConicClass < handle
+    properties(Access=private)
+        quadraticForm = zeros(1, 6);
+    end
+    
+    properties(SetAccess=private)
+        Eccentricity
+        Foci
+        QuadraticForm
+        Translation
+        AlignedQuadraticForm
+        RotationMatrix
+        RotationAngle
+        SemiLatusRectum
+    end
+    
+    properties(Access=public)
+        EffectiveZero = 1e-7;
+    end
+    
+    properties(Dependent=true)
+        
+    end
+    
+    methods (Access=public)
+        
+        function c = ConicClass()
+        end
+        
+        function [] = DebugPlot(obj)
+            %[x, y] = obj.GetPointsFromPolarForm(linspace(0, 2 * pi(), 1000));
+            [x, y] = obj.GetPointsFromParametricForm(linspace(0, 2 * pi(), 1000));
+            figure;
+            plot(x,y);
+            axis equal;
+        end
+        
+        function [] = DebugPlot2(obj)
+            %[x, y] = obj.GetPointsFromPolarForm(linspace(0, 2 * pi(), 1000));
+            [x, y] = obj.GetPointsFromParametricForm(linspace(0, 2 * pi(), 1000));
+
+            hold on;
+            plot(x,y);
+            axis equal;
+        end
+        
+        function [x,y] = GetPointsFromParametricForm(obj, thetas)
+            
+            a = obj.AlignedQuadraticForm(1)^-0.5;
+            b = obj.AlignedQuadraticForm(3)^-0.5;
+            
+            xy = [a .* cos(thetas); b .* sin(thetas)];
+            xy = obj.RotationMatrix * xy;
+            
+            x = xy(1, :) + obj.Translation(1);
+            y = xy(2, :) + obj.Translation(2);
+        end
+        
+        function [x,y] = GetPointsFromPolarForm(obj, thetas)
+            l = obj.SemiLatusRectum;
+            e = obj.Eccentricity;
+            r = l  ./ (1 - e * cos(thetas));
+            
+            xy = [r .* cos(thetas); r .* sin(thetas)];
+            xy = obj.RotationMatrix * xy;
+            
+            x = xy(1, :) + obj.Translation(1);
+            y = xy(2, :) + obj.Translation(2);
+        end
+        
+        function [x,y] = GetPointsFromPolarForm2(obj, zeroToOne)
+            % [x,y] = GetPointsFromPolarForm2(zeroToOne)
+            
+%             l = obj.SemiLatusRectum;
+%             e = obj.Eccentricity;
+%             
+%             % 0..1 -> 0..4 -> 
+%             zeroToOne = mod(zeroToOne, 1);
+%             quadrant = fix(zeroToOne .* 4);
+%             cosValues = mod(zeroToOne .* 4, 1);
+%             sinValues = sqrt(1 - (cosValues .^ 2));
+% 
+%             which = (quadrant > 1);
+%             cosValues(which) = 1-cosValues(which);
+%             which = mod(quadrant, 2) == 0;
+%             cosValues(which) = -cosValues(which);
+%             which = mod(quadrant, 2) == 0;
+%             sinValues(which) = 1-sinValues(which);
+%             which = (quadrant > 1);
+%             sinValues(which) = -sinValues(which);
+% 
+%             r = l  ./ (1 - e * cosValues);
+%             x = r .* cosValues;
+%             y = r .* sinValues;
+        end
+        
+        function SetEllipseStandardForm(obj, a, b)
+            % The ellipse has the form: x^2/a^2 + y^2/b^2 = 1
+            obj.SetQuadraticForm(a^-2,0,b^-2,0,0,-1);
+            %obj.SetEllipse(a, b, [0, 0], 0);
+        end
+        
+        function SetEllipse(obj, a, b, translation, rotationAngle)
+            % The ellipse has the form: x^2/a^2 + y^2/b^2 = 1
+            
+            if (nargin < 4)
+                translation = [0 0];
+            end
+            
+            if (nargin < 5)
+                rotationAngle = 0;
+            end
+            
+            A = a^-2;
+            B = 0;
+            C = b^-2;
+            D = 0;
+            E = 0;
+            F = -1;
+            
+            qf = [A, B, C, D, E, F];
+
+            X0 = translation(1);
+            Y0 = translation(2);
+
+            % Convert to translated quadratic form
+            D = D -2*A * X0;
+            E = E -2*C * Y0;
+            F = F + A * (X0 ^ 2) + C * (Y0 ^ 2);
+
+            % Convert to rotated quadratic form
+            Sa =  sin(rotationAngle);
+            Ca =  cos(rotationAngle);
+            
+            Ar =  A*Ca*Ca + B*Sa*Ca + C*Sa*Sa;
+            Cr =  A*Sa*Sa - B*Sa*Ca + C*Ca*Ca;
+            % TODO: could be opposite sign!!! should check it
+            Br =  B*(Ca*Ca - Sa*Sa) + 2*A*Ca*Sa - 2*C*Ca*Sa;
+            Dr =  D*Ca + E*Sa;
+            Er = -D*Sa + E*Ca;
+            Fr =  F;
+            
+            A = Ar; B = Br; C = Cr; D = Dr; E = Er; F = Fr;
+            
+            qf = [A, B, C, D, E, F];
+            obj.SetQuadraticForm(qf);
+        end
+        
+        function SetCircle(obj, radius)
+            % The ellipse has the form: x^2/a^2 + y^2/b^2 = 1
+            obj.SetQuadraticForm(1,0,1,0,0,-radius);
+        end
+        
+        function SetQuadraticForm(obj, a,b,c,d,e,f)
+            % Use either:
+            % c.SetQuadraticForm(a,b,c,d,e,f)
+            % c.SetQuadraticForm([a,b,c,d,e,f])
+            %
+            % Assuming the form: a*xx + b*xy + c*yy + d*x + e*y + f = 0
+            
+            assert(nargin == 7 || (nargin == 2 && numel(a) == 6));
+            
+            if (nargin == 7)
+                obj.quadraticForm = [a,b,c,d,e,f];
+            else
+                obj.quadraticForm = a(:);
+            end
+            
+            [qf, shift, angle, rotMatrix, eccentricity, foci, semiLatusRectum] = ...
+                obj.GetAlignedConic();
+            obj.QuadraticForm = obj.quadraticForm;
+            obj.Eccentricity = eccentricity;
+            obj.Foci = foci;
+            obj.Translation = shift;
+            obj.AlignedQuadraticForm = qf;
+            obj.RotationMatrix = rotMatrix;
+            obj.RotationAngle = angle;
+            obj.SemiLatusRectum = semiLatusRectum;
+            
+        end
+        
+        function [M] = GetConicMatrix(obj)
+            % Returns
+            % [
+            % A   B/2 D/2;
+            % B/2 C   E/2;
+            % D/2 E/2 F  ;
+            % ]
+            
+            qf = obj.quadraticForm;
+            M = [...
+                qf(1)  , qf(2)/2, qf(4)/2;...
+                qf(2)/2, qf(3)  , qf(5)/2;...
+                qf(4)  , qf(5)/2, qf(6)  ;...
+                ];
+        end
+        
+        function [d, M33, M12] = GetConicDeterminant(obj)
+            M = obj.GetConicMatrix();
+            
+            M33 = det(M(1:2, 1:2));
+            M12 = det(M([2,3], [1,3]));
+            d = det(M);
+        end
+        
+        function [type, numericType, d, M33, M12] = GetConicType(obj)
+            % Returns one of:
+            %
+            %
+            
+            [d, M33, M12] = obj.GetConicDeterminant();
+            
+            if (d == 0) % Degenerate
+                numericType = 0;
+                
+                if (M33 > obj.EffectiveZero)
+                    type = 'point';
+                elseif (M33 < -obj.EffectiveZero)
+                    if (obj.quadraticForm(1) + obj.quadraticForm(3) == 0)
+                        type = 'two perpendicular lines';
+                    else
+                        type = 'two intersecting lines';
+                    end
+                else
+                    if (M12 == 0)
+                        type = 'single line';
+                    else
+                        type = 'two parallel lines';
+                    end
+                end
+            else % Ellipse, Circle, Parabola, Hyperbola
+                if (M33 > obj.EffectiveZero)
+                    if (obj.quadraticForm(1) * d > 0) % no solution
+                        type = 'invalid';
+                    else
+                        if (obj.quadraticForm(1) == obj.quadraticForm(3) &&...
+                                obj.quadraticForm(2) == 0)
+                            type = 'circle';
+                            numericType = 1;
+                        else
+                            type = 'ellipse';
+                            numericType = 2;
+                        end
+                    end
+                elseif (M33 < -obj.EffectiveZero)
+                    type = 'hyperbola';
+                    numericType = 3;
+                else
+                    type = 'parabola';
+                    numericType = 4;
+                end
+            end
+        end
+        
+        function [qf] = GetQuadraticForm(obj)
+            qf = obj.quadraticForm;
+        end
+        
+        function [qf, shift, angle, rotMatrix, eccentricity, foci, semiLatusRectum] = ...
+                GetAlignedConicMethod1(obj)
+            
+            a = obj.quadraticForm(1);
+            b = obj.quadraticForm(2);
+            c = obj.quadraticForm(3);
+            d = obj.quadraticForm(4);
+            e = obj.quadraticForm(5);
+            f = obj.quadraticForm(6);
+            qf = obj.quadraticForm;
+            
+            foci = [];
+            eccentricity = 0;
+            semiLatusRectum = 0;
+            
+            if (a == c)
+                angle = pi() * 0.25;
+            else
+                angle = 0.5 * atan(b / (a - c));
+            end
+            
+            [qf, rotMatrix] = QuadraticFormRotation(qf, angle);
+            qf(2) = 0; % Just in case (might be numerically almost zero instead of actual zero)
+
+            Ar = qf(1); Br = qf(2); Cr = qf(3); Dr = qf(4); Er = qf(5); Fr = qf(6);
+            quadformBeforeShift = qf;
+            qf(4) = 0;
+            qf(5) = 0;
+            
+            [~, type] = obj.GetConicType();
+            
+            if (type == 1 || type == 2) % Circle, Ellipse
+                
+                Xo = -Dr / (2*Ar);
+                Yo = -Er / (2*Cr);
+                shift = [Xo, Yo];
+                
+                qf(1) = Ar / (Ar*Xo*Xo + Cr*Yo*Yo - Fr);
+                qf(3) = Cr / (Ar*Xo*Xo + Cr*Yo*Yo - Fr);
+                qf(6) = -1.0;
+                
+                if (type == 1)
+                    eccentricity = 0;
+                end
+                
+                if (abs(qf(1)) < abs(qf(3))) % foci on x-axis for ellipse
+                    a2 = abs(1 / qf(1));
+                    b2 = abs(1 / qf(3));
+                    
+                    if (type == 2) % ellipse
+                        c = sqrt(a2 - b2);
+                        foci = [c, 0; -c, 0];
+                        eccentricity = c / sqrt(a2);
+                    end
+                else % foci on y-axis for ellipse
+                    a2 = abs(1 / qf(3));
+                    b2 = abs(1 / qf(1));
+                    
+                    if (type == 2) % ellipse
+                        c = sqrt(a2 - b2);
+                        foci = [0, c; 0, -c];
+                        eccentricity = c / sqrt(a2);
+                    end
+                end
+                
+                semiLatusRectum = b2 / sqrt(a2);
+                
+            elseif (type == 3) % Hyperbola
+                
+                % circle, ellipse, or hyperbola
+                Xo = -Dr / (2*Ar);
+                Yo = -Er / (2*Cr);
+                
+                qf(1) = Ar / (Ar*Xo*Xo + Cr*Yo*Yo - Fr);
+                qf(3) = Cr / (Ar*Xo*Xo + Cr*Yo*Yo - Fr);
+                qf(6) = -1.0;
+                
+                if (qf(1) > qf(3)) % foci on x-axis
+                    a2 = abs(1 / qf(1));
+                    b2 = abs(1 / qf(3));
+                    
+                    c = sqrt( a2 + b2 );
+                    foci = [c 0; -c 0];
+                    eccentricity = c / sqrt(a2);
+                else % foci on y-axis
+                    a2 = abs(1 / qf(3));
+                    b2 = abs(1 / qf(1));
+                    c = sqrt( a2 + b2 );
+                    foci = [0 c; 0 -c];
+                    eccentricity = c / sqrt(a2);
+                end
+                
+                semiLatusRectum = b2 / sqrt(a2);
+                shift = [Xo, Yo];
+                
+            else %if (type == 4) % Parabola
+                
+                if (abs(Ar) > abs(Cr)) % form: x² - 4·p·y = 0
+                    Xo = Dr/(2*Ar);
+                    Yo = (Fr - Dr*Dr/(4*Ar))/Er;
+                    
+                    qf(1) = 1;
+                    qf(5) = Er / Ar;
+                    p = -qf(5) / 4;
+                    foci = [0, p];
+                    
+                else % form: y² - 4·p·x = 0
+                    Xo = (Fr - Er*Er/(4*Cr))/Dr;
+                    Yo = Er/(2*Cr);
+                    
+                    qf(3) = 1;
+                    qf(4) = Dr / Cr;
+                    p = -qf(4) / 4;
+                    foci = [p, 0];
+                end
+
+                semiLatusRectum = p;
+                shift = [Xo, Yo];
+                eccentricity = 1; % for all parabolas
+            end
+        end
+        
+        function [qf, shift, angle, rotMatrix, eccentricity, foci, semiLatusRectum] = ...
+                GetAlignedConic(obj)
+            
+            a = obj.quadraticForm(1);
+            b = obj.quadraticForm(2);
+            c = obj.quadraticForm(3);
+            d = obj.quadraticForm(4);
+            e = obj.quadraticForm(5);
+            f = obj.quadraticForm(6);
+            qf = obj.quadraticForm;
+            
+            foci = [];
+            eccentricity = 0;
+            semiLatusRectum = 0;
+            
+            [alignedQF, shift, angle, rotMatrix, eccentricity, foci, semiLatusRectum] = ...
+                obj.GetAlignedConicMethod1();
+
+            % Calculate center in the original coordinates
+            center = (rotMatrix * shift')';
+            
+            shift = center;
+            qf = QuadraticFormTranslation(qf, -center);
+            
+            if (a == c)
+                angle = pi() * 0.25;
+            else
+                angle = 0.5 * atan(b / (a - c));
+            end
+            
+            [qf, rotMatrix, inverseRotMatrix] = QuadraticFormRotation(qf, angle);
+            % Just in case
+            qf(2) = 0;
+            qf(4) = 0;
+            qf(5) = 0;
+        end
+        
+    end
+    
+end
+
